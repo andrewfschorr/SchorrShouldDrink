@@ -52,7 +52,7 @@ function App() {
           </button>
         </div>
       </nav>
-      <AppWrapper className="container mx-auto pt-6">
+      <AppWrapper className="container mx-auto pt-6 px-2">
         <SelectedDrink selectedDrink={selectedDrink} />
         <Ingredients
           setSelectedCb={(selectedDrinks: Array<string>) => {

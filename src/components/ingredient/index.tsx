@@ -74,7 +74,7 @@ interface IngredientProps {
 
 const IngredientChooser = ({options, index, deleteCb, updatedrinkCb, selected}: IngredientProps) => {
   return <IngredientWrapper>
-    <select onChange={e => updatedrinkCb(e.target.value, index)} value={selected}>
+    <select onChange={e => updatedrinkCb(e.target.value, index)} value={selected} className="border border-blue-800">
       {options.map((opt:string, i:number) =>
         (<option
           className="bg-gray-600"

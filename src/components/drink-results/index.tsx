@@ -16,14 +16,14 @@ interface DrinkInterface {
 
 const Drink = ({name, img, id, selectDrink} : DrinkInterface) => {
   return <div
-      className="w-1/6 mb-4 p-6 cursor-pointer"
+      className="w-1/6 mb-4 p-2 lg:p-6 cursor-pointer"
       onClick={() => {
         window.scrollTo(0, 0);
         selectDrink(id)
       }}
     >
-    <img className="rounded" src={img} />
-    <p className="mt-3">{name}</p>
+    <img className="rounded" src={img} alt="some drink!" />
+    <p className="mt-3 text-xs md:text-lg">{name}</p>
   </div>
 }
 
@@ -35,11 +35,11 @@ export default ({ matchingDrinks, selectDrink }: selectedIngredientsProps) => {
   }, [matchingDrinks]);
 
   if (typeof drinkResults === 'undefined') {
-    return <p className="mt-6">loading... 🍸</p>
+    return <p className="mt-6">loading... <span role="img" aria-label="hawt drink">🍸</span></p>
   }
 
   if (drinkResults.drinks === NONE_FOUND) {
-    return <p className="mt-6">none found ☹️</p>
+    return <p className="mt-6">none found <span role="img" aria-label="sad face">️😦</span></p>
   }
   return (
     <div className="flex flex-wrap -mb-4">
