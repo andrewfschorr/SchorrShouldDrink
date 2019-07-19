@@ -20,7 +20,7 @@ export default ({setSelectedCb} : IngredientsProps) => {
   useEffect(() => {
     fetch('https://www.thecocktaildb.com/api/json/v2/8673533/list.php?i=list')
       .then(resp => resp.json())
-      .then((data: any) => data.drinks.map((item: any) => item.strIngredient1))
+      .then((data: any) => data.drinks.map((item: any) => item.strIngredient1).sort((a:string, b:string) => a.localeCompare(b)))
       .then(ingredients => {
         setIngredientOpts([EMPTY_ITEM, ...ingredients]);
       });

@@ -21,10 +21,6 @@ function App() {
   const [selectedDrink, setSelectDrink] = useState<any | null>(null);
   const [returnedDrinks, setRetunedDrinks] = useState([]);
 
-  // useEffect(() => {
-  //   console.log(selectedDrink);
-  // }, [selectedDrink]);
-
   useEffect(() => {
     fetchCocktails(selectedIngredients, (matchingCocktails: any) => {
       setRetunedDrinks(matchingCocktails);
