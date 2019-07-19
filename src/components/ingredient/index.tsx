@@ -10,7 +10,7 @@ const EMPTY_ITEM = '';
 
 interface IngredientsProps {
   setSelectedCb: any, // OMG fix MEEE
-  selectDrink: any,
+  // selectDrink: any,
 }
 
 export default ({setSelectedCb} : IngredientsProps) => {
@@ -28,7 +28,7 @@ export default ({setSelectedCb} : IngredientsProps) => {
 
   useEffect(() => {
     setSelectedCb(selectedIngredients);
-  }, [selectedIngredients, setSelectedCb]);
+  }, [selectedIngredients]);
 
   return (
     <Fragment>

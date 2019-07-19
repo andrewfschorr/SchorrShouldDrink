@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export default ({selectedDrink} : any) => {
-  let [drinkComponent, setDrinkCompontnt] = useState(selectedDrink);
+  if (selectedDrink === null) return null;
+  return (
+    <div className="flex">
+    <img className="mb-6 mr-6 rounded" style={{width: '20%'}} src={selectedDrink.strDrinkThumb} alt=""/>
+    <div className="flex-grow">
+      <h2 className="text-4xl font-semibold">{selectedDrink.strDrink}</h2>
+      {getDirections(selectedDrink)}
+      <p className="text-2xl">{selectedDrink.strInstructions}</p>
+    </div>
+  </div>);
 
-  useEffect(() => {
-    if (selectedDrink === null) {
-      setDrinkCompontnt(selectedDrink);
-      return;
-    }
-    fetch(`https://www.thecocktaildb.com/api/json/v2/8673533/lookup.php?i=${selectedDrink}`)
-      .then(resp => resp.json())
-      .then(data => {
-        const drink = data.drinks[0];
-        console.log(drink);
-        const selectedDrinkComponent = <div className="flex">
-          <img className="mb-6 mr-6 rounded" style={{width: '20%'}} src={drink.strDrinkThumb} alt=""/>
-          <div className="flex-grow">
-            <h2 className="text-4xl font-semibold">{drink.strDrink}</h2>
-            {getDirections(drink)}
-            <p className="text-2xl">{drink.strInstructions}</p>
-          </div>
-        </div>
-        setDrinkCompontnt(selectedDrinkComponent);
-        window.scrollTo(0, 0)
-      })
-  }, [selectedDrink]);
-
-
-  return selectedDrink === null ? selectedDrink : drinkComponent;
 }
-
 
 function getDirections(drink: any) {
   const ingredientString = 'strIngredient';

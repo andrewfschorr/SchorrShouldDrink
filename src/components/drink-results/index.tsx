@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const NONE_FOUND = 'None Found'
 
-interface selectedIngredients {
-  selectedIngredients: Array<string>
+interface selectedIngredientsProps {
+  matchingDrinks: any,
   selectDrink: any,
 }
 
@@ -17,34 +17,22 @@ interface DrinkInterface {
 const Drink = ({name, img, id, selectDrink} : DrinkInterface) => {
   return <div
       className="w-1/6 mb-4 p-6 cursor-pointer"
-      onClick={() => selectDrink(id)}
+      onClick={() => {
+        window.scrollTo(0, 0);
+        selectDrink(id)
+      }}
     >
     <img className="rounded" src={img} />
     <p className="mt-3">{name}</p>
   </div>
 }
 
-export default ({ selectedIngredients, selectDrink }: selectedIngredients) => {
-  // console.log(selectedIngredients);
-
-  const [drinkResults, setDrinks] = useState();
+export default ({ matchingDrinks, selectDrink }: selectedIngredientsProps) => {
+  const [drinkResults, setDrink] = useState();
 
   useEffect(() => {
-    fetch(`https://www.thecocktaildb.com/api/json/v2/8673533/filter.php?i=${normalizeIngredients(selectedIngredients)}`).then(resp => resp.json())
-      .then(data => {
-        if (Array.isArray(data.drinks)) {
-          setDrinks({drinks: data.drinks.map((drink:any) => {
-            return {
-              name: drink.strDrink,
-              img: drink.strDrinkThumb,
-              id: drink.idDrink,
-            }
-          })});
-        } else {
-          setDrinks(data);
-        }
-      });
-  }, [selectedIngredients]);
+      setDrink(matchingDrinks);
+  }, [matchingDrinks]);
 
   if (typeof drinkResults === 'undefined') {
     return <p className="mt-6">loading... 🍸</p>
@@ -53,10 +41,9 @@ export default ({ selectedIngredients, selectDrink }: selectedIngredients) => {
   if (drinkResults.drinks === NONE_FOUND) {
     return <p className="mt-6">none found ☹️</p>
   }
-
   return (
     <div className="flex flex-wrap -mb-4">
-      {drinkResults.drinks.map((drink:any, index:number) =>
+      {matchingDrinks.length > 0 && matchingDrinks.map((drink:any, index:number) =>
         <Drink
           name={drink.name}
           img={drink.img}
@@ -67,12 +54,4 @@ export default ({ selectedIngredients, selectDrink }: selectedIngredients) => {
       )}
     </div>
   )
-}
-
-function normalizeIngredients(drinks: Array<string>) {
-  if (drinks.length === 1 && drinks[0] === '') {
-    return '';
-  }
-  return drinks.filter((item, index) => drinks.indexOf(item) === index && item !== '')
-    .map(drink => drink.replace(/ /g, '_')).join(',');
 }
