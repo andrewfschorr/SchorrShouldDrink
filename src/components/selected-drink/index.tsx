@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import DrinkInterface from '../../interfaces/drink-interface';
+
 const ImgWrapper = styled.div`
-    width: 60%;
+    flex: 0 0 60%;
     @media (min-width: 768px) {
-      width: 30%;
+      flex: 0 0 30%;
     }
 `;
 
 
-export default ({selectedDrink} : any) => {
+export default ({selectedDrink} : {selectedDrink: null | DrinkInterface}) => {
   if (selectedDrink === null) return null;
   return (
     <div className="flex">
@@ -22,10 +24,9 @@ export default ({selectedDrink} : any) => {
       <p className="text-base md:text-2xl">{selectedDrink.strInstructions}</p>
     </div>
   </div>);
-
 }
 
-function getDirections(drink: any) {
+function getDirections(drink: DrinkInterface)  {
   const ingredientString = 'strIngredient';
   const measurementString = 'strMeasure';
   const directionsArray = [];
